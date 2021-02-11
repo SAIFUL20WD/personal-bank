@@ -9,6 +9,110 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <section id="login-area">
+        <h1 class="text-center pt-5 mt-5">Welcome To Personal Bank</h1>
+        <div class="container submit-area">
+            <h4>Login</h4>
+            <input type="email" class="form-control mb-4" placeholder="Enter Your Email">
+            <input type="password" class="form-control mb-4" placeholder="Enter Your Password">
+            <button id="login" class="btn btn-success">Enter</button>
+        </div>
+    </section>
+
+    <section id="transaction-area" class="container">
+
+        <div class="row">
+
+            <div class="col-md-4 col-12 mb-3">
+                <div class="deposit status">
+                    <h5>Deposit</h5>
+                    <h2>$ <span id="current-deposit">00</span></h2>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 mb-3">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$ <span id="current-withdraw">00</span></h2>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 mb-3">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                    <h2>$ <span id="current-balance">1240</span></h2>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 col-12">
+                <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input type="number" id="deposit-input" class="form-control mb-4" placeholder="$ amount you want to deposit">
+                    <button id="add-deposit" class="btn btn-success">Deposit</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input type="number" id="withdraw-input" class="form-control mb-4" placeholder="$ amount you want to withdraw">
+                    <button id="add-withdraw" class="btn btn-success">Withdraw</button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+        // Login button event handler.
+        const loginButton = document.getElementById("login");
+        loginButton.addEventListener("click", function(){
+            const loginArea = document.getElementById("login-area");
+            loginArea.style.display = "none";
+
+            const transactionArea = document.getElementById("transaction-area");
+            transactionArea.style.display = "block";
+        });
+
+        // Deposit button event handler.
+        const depositButton = document.getElementById("add-deposit");
+        depositButton.addEventListener("click", function(){
+            const depositAmount = getInputNumber("deposit-input");
+
+            updateSpanText("current-deposit", depositAmount)
+            updateSpanText("current-balance", depositAmount)
+
+            document.getElementById("deposit-input").value = "";
+        })
+
+        // Withdraw button event handler.
+        const withdrawButton = document.getElementById("add-withdraw");
+        withdrawButton.addEventListener("click", function(){
+            const withdrawAmount = getInputNumber("withdraw-input");
+
+            updateSpanText("current-withdraw", withdrawAmount);
+            updateSpanText("current-balance", -1 * withdrawAmount)
+
+            document.getElementById("withdraw-input").value = "";
+        })
+
+        function getInputNumber(id){
+            const input = document.getElementById(id).value;
+            const inputNumber = parseFloat(input);
+            return inputNumber;
+        }
+
+        function updateSpanText(id, amount){
+            const current = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(current);
+            const total = amount + currentNumber; 
+            document.getElementById(id).innerText = total;
+        }
+    </script>
 </body>
 </html>
